@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'https://ruby.taobao.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -52,6 +52,7 @@ gem 'devise'
 gem 'high_voltage'
 gem 'pg'
 gem 'slim-rails'
+gem 'roo', '~> 2.5.0'
 
 group :development do
   gem 'better_errors'

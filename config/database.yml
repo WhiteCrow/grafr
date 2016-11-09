@@ -16,9 +16,9 @@ development:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: grafr_development
+  database: school_grafr_development
   pool:     5
-  username: liusihao
+  username: postgres
   password: password
   template: template0
 
@@ -44,9 +44,9 @@ test:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: grafr_test
+  database: school_grafr_test
   pool:     5
-  username: liusihao
+  username: postgres
   password: password
   template: template0
 
@@ -54,8 +54,8 @@ production:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: grafr_production
+  database: school_grafr_production
   pool:     5
-  username: liusihao
+  username: postgres
   password: password
   template: template0
