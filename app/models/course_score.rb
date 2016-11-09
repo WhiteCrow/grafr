@@ -34,10 +34,10 @@ class CourseScore < ApplicationRecord
   def score
     if category == "Attendence"
       AttendenceScoring[value]
-    elsif category == "Attendence"
+    elsif category == "Class Performance"
       ClassPerformanceScoring[value]
     else
       value
-    end
+    end.to_f
   end
 end
