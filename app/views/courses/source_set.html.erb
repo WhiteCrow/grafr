@@ -1,0 +1,32 @@
+<h3><%= @course.name %></h3>
+<h4><%= @course.number %> <%= @category %></h4>
+<table class="table">
+  <tr>
+    <th>Student</th>
+    <th>Total Point</th>
+    <% (1..@max_index).each do |index| %>
+      <th><%= index %></th>
+    <% end %>
+  </tr>
+
+  <% @source_set.each do |source| %>
+    <% @current_student = source.student_id %>
+
+    <%if @pre_student.nil? %>
+
+      <% @score_arr = [source.score] %>
+      <tr><td><%= source.student.cn_name %></td><td></td>
+    <% elsif @pre_student != @current_student %>
+
+      <% @total_score =  @score_arr.reduce(:+)/@score_arr.count %>
+      </tr><tr><td><%= source.student.cn_name %></td><td><%= @total_score %></td>
+      <% @score_arr = [source.score] %>
+    <% end %>
+
+      <% @score_arr << source.score %>
+      <td><%= source.value %></td>
+
+    <% @pre_student = source.student_id %>
+  <% end %>
+    </tr>
+</table>

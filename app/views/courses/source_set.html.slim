@@ -1,0 +1,16 @@
+h3 = @course.name
+p = @course.number
+
+table.table
+  tr
+    th Student
+    th Total Point
+    - (1..@max_index).each do |index|
+      th = index
+  - @source_set.map(&:student).uniq.each do |student|
+    tr
+      td
+        = student.cn_name
+      td 1
+      - (1..@max_index).each do |index|
+        td "#{student.id} #{index}"

@@ -6,28 +6,24 @@ task :import_course_score => :environment do
   course_scores = CourseScore.where(category: "Attendence")
   students = Student.all
 
-  sheets = {}
   CourseScore::Categories.each do |category|
-    sheets[category] = file.sheet_for(category)
-  end
+    sheet = file.sheet_for(category)
+    column_count = sheet.row(2).count
 
-  sheet = sheets["Attendence"]
-  column_count = sheet.row(2).count
+    (2..sheet.last_row).each do |i|
+      row = sheet.row(i)
+      student_id = students.find_by_cn_name!(row[0]).id
 
-  (2..sheet.last_row).each do |i|
-    row = sheet.row(i)
-    student_id = students.find_by_cn_name!(row[0]).id
-
-    (1..(column_count - 2)).each do |index|
-      # (1..44)
-      value = row[1 + index]
-      if course_scores.find_by(student_id: student_id, course_id: course_id, category: "Attendence", index: index).blank? && value.present?
-        cs = CourseScore.create!(student_id: student_id, course_id: course_id, category: "Attendence", value: value, index: index)
-        puts cs.to_json
+      (1..(column_count - 2)).each do |index|
+        # (1..44)
+        value = row[1 + index]
+        if course_scores.find_by(student_id: student_id, course_id: course_id, category: category, index: index).blank? && value.present?
+          CourseScore.create!(student_id: student_id, course_id: course_id, category: category, value: value, index: index)
+        end
       end
     end
-  end
+    puts "#{category} number: #{(sheet.last_row - 1) * (column_count - 2)}"
+    puts "import count: #{CourseScore.where(category: category, course_id: course_id).count}"
 
-  puts "Attendence number: #{(sheet.last_row - 1) * (column_count - 2)}"
-  puts "import count: #{CourseScore.count}"
+  end
 end
