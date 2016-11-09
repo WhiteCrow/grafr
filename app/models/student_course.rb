@@ -11,7 +11,7 @@ class StudentCourse < ApplicationRecord
     raise Exception.new("Wrong Type") if category.nil?
 
     sources = CourseScore.where(category: category, course_id: course_id, student_id: student_id).map(&:score)
-    result = sources.reduce(:+) / sources.count
+    result = (sources.reduce(:+).to_f / sources.count).round
 
     self.update!(score_category => result)
     result

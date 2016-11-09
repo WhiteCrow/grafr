@@ -1,6 +1,10 @@
 class CoursesController < ApplicationController
   before_action :set_course
 
+  def show
+    @student_courses = @course.student_courses.includes(:student)
+  end
+
   CourseScore::CategoriesDict.each_pair do |method_name, category|
     define_method method_name do
       @category = method_name
