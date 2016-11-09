@@ -1,11 +1,8 @@
 h3 Welcome
-table.table
-  tr
-    th Student Name
-    th Total Points
-    th Attendence
-    th Class Performance
-    th Homework
-    th Quiz
-    th Mid-term
-
+ul
+  - @courses.each do |course|
+    li
+      = link_to course do
+        = course.name
+        | &nbsp;&nbsp;
+        = course.number

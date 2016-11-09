@@ -22,6 +22,23 @@ class StudentCourse < ApplicationRecord
     instance.attributes[score_category] || instance.recalculate(score_category)
   end
 
+  def update_total_score!
+    course = Course.find(course_id)
+    weight = ScoreWeight.find_by_course_number!(course.number)
+
+    _total_wight = _total_score = 0
+    CourseScore::CategoriesDict.keys.map do |category|
+      score = attributes[category]
+      if score.present?
+        _total_wight = _total_wight + weight.attributes[category]
+        _total_score = (_total_score + score * weight.attributes[category])
+      end
+    end
+    result = (_total_score.to_f / _total_wight).round
+    self.update!(total_score: result)
+    result
+  end
+
   #def calculate(score_category)
   #  StudentCourse.calculate(score_category, self.course_id, self.student_id)
   #end

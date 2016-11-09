@@ -2,7 +2,12 @@ class CoursesController < ApplicationController
   before_action :set_course
 
   def show
-    @student_courses = @course.student_courses.includes(:student)
+    @student_courses = @course.student_courses.includes(:student).order(total_score: :desc)
+    total_score_arr = @student_courses.map(&:total_score).compact
+    len = total_score_arr.count.to_f
+    @average_total_score = (total_score_arr.reduce(:+) / len).round
+    sorted = total_score_arr.sort
+    @median_total_score = (len % 2 == 1 ? sorted[len/2] : (sorted[len/2 - 1] + sorted[len/2]).to_f / 2)
   end
 
   CourseScore::CategoriesDict.each_pair do |method_name, category|

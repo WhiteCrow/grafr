@@ -2,15 +2,26 @@ h3 = @course.name
 p = "#{@course.number} collection"
 table.table
   tr
+    th 汇总
+    th style='width: 350px' 中位数分数（Median Score）
+    th 平均分(Average Score)
+  tr
+    th 分数
+    td = @average_total_score
+    td = @median_total_score
+table.table
+  tr
+    th RANK
     th Student
     th English Name
     th Total Score
     - CourseScore::CategoriesDict.values.each do |category|
       th = category
-  - @student_courses.each do |sc|
+  - @student_courses.each_with_index do |sc, index|
     tr
+      td = index + 1
       td = sc.student.cn_name
       td = sc.student.en_name
-      td Total Score
+      td = sc.total_score || sc.update_total_score!
       - CourseScore::CategoriesDict.keys.each do |category|
         td = sc.attributes[category]
