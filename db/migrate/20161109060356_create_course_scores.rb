@@ -4,7 +4,7 @@ class CreateCourseScores < ActiveRecord::Migration[5.0]
       t.integer :student_id
       t.integer :course_id
       t.integer :category
-      t.date :date
+      t.integer :index
       t.string :value
       t.float :score
 

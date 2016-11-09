@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161109060356) do
+ActiveRecord::Schema.define(version: 20161109084100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20161109060356) do
     t.integer  "student_id"
     t.integer  "course_id"
     t.integer  "category"
-    t.date     "date"
+    t.integer  "index"
     t.string   "value"
     t.float    "score"
     t.datetime "created_at", null: false
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 20161109060356) do
     t.string   "name"
     t.string   "subject"
     t.integer  "period"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "student_courses", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "teacher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
