@@ -12,12 +12,15 @@ task :import_course_score, [:arg] => :environment do |t, args|
     sheet = file.sheet_for(category)
     column_count = sheet.row(2).count
 
-    (2..sheet.last_row).each do |i|
+    category == "Mid-Term" ? last_row = sheet.last_row : last_row = 2
+
+    (2..last_row).each do |i|
       row = sheet.row(i)
       begin
         student_id = students.find_by_cn_name!(row[0]).id
       rescue
         puts row[0]
+        binding.pry
       end
 
       (1..(column_count - 2)).each do |index|

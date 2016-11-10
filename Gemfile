@@ -53,6 +53,7 @@ gem 'high_voltage'
 gem 'pg'
 gem 'slim-rails'
 gem 'roo', '~> 2.5.0'
+gem 'rails_admin'
 
 group :development do
   gem 'better_errors'

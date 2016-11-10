@@ -32,9 +32,11 @@ class StudentCourse < ApplicationRecord
     _total_wight = _total_score = 0
     CourseScore::CategoriesDict.keys.map do |category|
       score = attributes[category]
+      _weight = weight.attributes[category]
+      _weight = _weight * 2 if category == "mid_term"
       if score.present?
-        _total_wight = _total_wight + weight.attributes[category]
-        _total_score = (_total_score + score * weight.attributes[category])
+        _total_wight = _total_wight + _weight
+        _total_score = (_total_score + score * _weight)
       end
     end
     if _total_wight ==  0
