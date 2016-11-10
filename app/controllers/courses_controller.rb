@@ -15,7 +15,7 @@ class CoursesController < ApplicationController
       @category = method_name
       @category_name = category
       @score_set = @course.course_scores.where(category: category).includes(:student).order(:student_id, :index)
-      @max_index =  @score_set.maximum(:index)
+      @max_index = @score_set.maximum(:index)
       render :score_set
     end
   end

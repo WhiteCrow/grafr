@@ -38,6 +38,6 @@ class CourseScore < ApplicationRecord
       ClassPerformanceScoring[value]
     else
       value
-    end.to_f
+    end.to_i
   end
 end

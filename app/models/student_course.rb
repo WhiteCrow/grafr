@@ -51,4 +51,18 @@ class StudentCourse < ApplicationRecord
   #  StudentCourse.calculate(score_category, self.course_id, self.student_id)
   #end
 
+  def gpa
+    if total_score >= 90;    return 4
+    elsif total_score >= 85; return 3.7
+    elsif total_score >= 82; return 3.3
+    elsif total_score >= 78; return 3.3
+    elsif total_score >= 75; return 2.7
+    elsif total_score >= 72; return 2.3
+    elsif total_score >= 68; return 2
+    elsif total_score >= 64; return 1.5
+    elsif total_score >= 60; return 1
+    else; return 0
+    end
+  end
+
 end

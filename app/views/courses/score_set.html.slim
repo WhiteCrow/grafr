@@ -12,18 +12,19 @@ table.table
     - (1..@max_index).each do |index|
       th = index
 
-  - index = 0
+  - @index = 0
   - @score_set.each do |score|
     - @current_student = score.student
     - if @pre_student != @current_student
       - if @value_arr.present?
-        - @total_score = StudentCourse.calculate(@category, @course.id, @pre_student.id)
+        - @sc = StudentCourse.find_by(course_id: @course.id, student_id: @pre_student.id)
         tr
-          - index = index + 1
-          td = index
+          - @index = @index + 1
+          td = @index
           td = @pre_student.number
           td = @pre_student.cn_name
           td = @pre_student.en_name
+          td = @sc.public_send(@category) if @sc.present?
           td = @total_score
           td
             = link_to "Recalculate", recalculate_score_course_path(@course, category: @category, student_id: @pre_student.id), class: "btn btn-sm btn-success", method: :post
@@ -35,12 +36,13 @@ table.table
     - @pre_student = score.student
 
   tr
-    - @total_score = StudentCourse.calculate(@category, @course.id, @pre_student.id)
-    - index = index + 1
-    td = index
+    - @sc = StudentCourse.find_by(course_id: @course.id, student_id: @pre_student.id)
+    - @index = @index + 1
+    td = @index
     td = @pre_student.number
     td = @pre_student.cn_name
     td = @pre_student.en_name
+    td = @sc.public_send(@category) if @sc.present?
     td = @total_score
     td
       = link_to "Recalculate", recalculate_score_course_path(@course, category: @category, student_id: @pre_student.id), class: "btn btn-sm btn-success", method: :post

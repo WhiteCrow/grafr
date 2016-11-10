@@ -9,12 +9,14 @@ table.table
     th 分数
     td = @average_total_score
     td = @median_total_score
+
 table.table
   tr
     th RANK
     th Student
     th English Name
     th Total Score
+    th GPA
     - CourseScore::CategoriesDict.each_pair do |category_key, category|
       th = link_to category, "/courses/#{@course.id}/#{category_key}", target: '_blank'
   - @student_courses.each_with_index do |sc, index|
@@ -23,5 +25,6 @@ table.table
       td = sc.student.cn_name
       td = sc.student.en_name
       td = sc.total_score || sc.update_total_score!
+      td = sc.gpa
       - CourseScore::CategoriesDict.keys.each do |category|
         td = sc.attributes[category]

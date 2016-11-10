@@ -4,7 +4,7 @@ table.table
     th RANK
     th Number
     th Student
-    th Total Score
+    th Total Score (GPA)
     - @courses.each do |course|
       th  = link_to course.name + " Score", course
   - @rank = 0
@@ -14,7 +14,7 @@ table.table
         td = @rank
         td = student.number
         td = student.cn_name
-        td = student.total_score_by @course_id_period_dict
+        td = student.total_gpa
         - @courses.each do |course|
           td
             - student.student_courses.each do |sc|
