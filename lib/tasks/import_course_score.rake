@@ -1,9 +1,10 @@
 require 'roo'
 
-task :import_course_score => :environment do
-  puts ARGV[1]
-  file = Roo::Spreadsheet.open("#{Rails.root}/data/course/#{ARGV[1] || '201601G07CS001'}.xlsx")
-  course_id = Course.find_by_number!(ARGV[1]).id
+task :import_course_score, [:arg] => :environment do |t, args|
+  course_number = args[:arg]
+  puts course_number
+  file = Roo::Spreadsheet.open("#{Rails.root}/data/course/#{course_number || '201601G07CS001'}.xlsx")
+  course_id = Course.find_by_number!(course_number).id
   course_scores = CourseScore.all
   students = Student.all
 
@@ -13,13 +14,22 @@ task :import_course_score => :environment do
 
     (2..sheet.last_row).each do |i|
       row = sheet.row(i)
-      student_id = students.find_by_cn_name!(row[0]).id
+      begin
+        student_id = students.find_by_cn_name!(row[0]).id
+      rescue
+        puts row[0]
+      end
 
       (1..(column_count - 2)).each do |index|
         # (1..44)
         value = row[1 + index]
-        if course_scores.find_by(student_id: student_id, course_id: course_id, category: category, index: index).blank? && value.present?
-          CourseScore.create!(student_id: student_id, course_id: course_id, category: category, value: value, index: index)
+        begin
+          if course_scores.find_by(student_id: student_id, course_id: course_id, category: category, index: index).blank? && value.present?
+            CourseScore.create!(student_id: student_id, course_id: course_id, category: category, value: value, index: index)
+          end
+        rescue
+          puts row[0]
+          binding.pry
         end
       end
     end
