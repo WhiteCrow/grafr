@@ -5,6 +5,7 @@ table.table
     th Number
     th Student
     th Total Score (GPA)
+    th Show
     - @courses.each do |course|
       th  = link_to course.name + " Score", course
   - @rank = 0
@@ -15,6 +16,7 @@ table.table
         td = student.number
         td = student.cn_name
         td = student.total_gpa
+        td = link_to "Show", student, class: 'btn btn-success btn-sm'
         - @courses.each do |course|
           td
             - student.student_courses.each do |sc|

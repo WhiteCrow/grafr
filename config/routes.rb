@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # resources :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :grades, only: [:show]
+  resources :students, only: [:show]
   resources :courses do
     get "attendence", "class_performance", "homework", "quiz", "mid_term", on: :member
     post "recalculate_score", on: :member

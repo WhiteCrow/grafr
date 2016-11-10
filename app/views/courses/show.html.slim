@@ -19,6 +19,7 @@ table.table
     th GPA
     - CourseScore::CategoriesDict.each_pair do |category_key, category|
       th = link_to category, "/courses/#{@course.id}/#{category_key}", target: '_blank'
+    th Comment
   - @student_courses.each_with_index do |sc, index|
     tr
       td = index + 1
@@ -28,3 +29,4 @@ table.table
       td = sc.gpa
       - CourseScore::CategoriesDict.keys.each do |category|
         td = sc.attributes[category]
+      td = sc.comment

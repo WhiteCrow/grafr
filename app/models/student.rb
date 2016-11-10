@@ -5,9 +5,18 @@ class Student < ApplicationRecord
   attr_accessor :total_gpa
 
   validates_uniqueness_of :number
-  validates_presence_of :number, :cn_name, :en_name, :grade
+  validates_presence_of :number, :cn_name, :en_name, :grade, :gender
 
+  enum gender: ["女", "男"]
   scope :grade, ->(grade){where(grade: grade).includes(:student_courses)}
+
+  def gender_string
+    if gender == 0
+      "女"
+    elsif gender == 1
+      "男"
+    end
+  end
 
   def total_gpa_by(course_id_period_dict)
     #course_id_period_dict = courses.to_a.map{|c| {c.id => c.period}}.reduce(:merge)
@@ -23,5 +32,20 @@ class Student < ApplicationRecord
     end
     return 0 if weight_sum == 0
     (gpa_sum.to_f / weight_sum).round(2)
+  end
+
+  def level
+    return nil if total_gpa.nil?
+    if    total_gpa >= 4;    return "A"
+    elsif total_gpa >= 3.7 ; return "A-"
+    elsif total_gpa >= 3.3 ; return "B+"
+    elsif total_gpa >= 3.3 ; return "B"
+    elsif total_gpa >= 2.7 ; return "B-"
+    elsif total_gpa >= 2.3 ; return "C+"
+    elsif total_gpa >= 2   ; return "C"
+    elsif total_gpa >= 1.5 ; return "C-"
+    elsif total_gpa >= 1   ; return "D"
+    else; return "F"
+    end
   end
 end

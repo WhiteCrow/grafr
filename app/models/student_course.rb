@@ -65,4 +65,18 @@ class StudentCourse < ApplicationRecord
     end
   end
 
+  def level
+    if total_score >= 90;    return "A"
+    elsif total_score >= 85; return "A-"
+    elsif total_score >= 82; return "B+"
+    elsif total_score >= 78; return "B"
+    elsif total_score >= 75; return "B-"
+    elsif total_score >= 72; return "C+"
+    elsif total_score >= 68; return "C"
+    elsif total_score >= 64; return "C-"
+    elsif total_score >= 60; return "D"
+    else; return "F"
+    end
+  end
+
 end
