@@ -1,8 +1,9 @@
 require 'roo'
 
 task :import_student_course => :environment do
-  file = Roo::Spreadsheet.open("#{Rails.root}/data/201601G07CS001.xlsx")
-  course_id = Course.find_by_number!("201601G07CS001").id
+  puts ARGV[1]
+  file = Roo::Spreadsheet.open("#{Rails.root}/data/course/#{ARGV[1] || '201601G07CS001'}.xlsx")
+  course_id = Course.find_by_number!(ARGV[1]).id
   students = Student.all
 
   sheet = file.sheet(0)

@@ -1,9 +1,10 @@
 require 'roo'
 
 task :import_course_score => :environment do
-  file = Roo::Spreadsheet.open("#{Rails.root}/data/201601G07CS001.xlsx")
-  course_id = Course.find_by_number!("201601G07CS001").id
-  course_scores = CourseScore.where(category: "Attendence")
+  puts ARGV[1]
+  file = Roo::Spreadsheet.open("#{Rails.root}/data/course/#{ARGV[1] || '201601G07CS001'}.xlsx")
+  course_id = Course.find_by_number!(ARGV[1]).id
+  course_scores = CourseScore.all
   students = Student.all
 
   CourseScore::Categories.each do |category|
