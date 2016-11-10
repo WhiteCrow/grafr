@@ -4,4 +4,6 @@ class Course < ApplicationRecord
 
   validates_uniqueness_of :number
   validates_presence_of :number, :name, :subject, :period
+
+  scope :grade, ->(grade){where("number LIKE '201601G#{grade}%'")}
 end

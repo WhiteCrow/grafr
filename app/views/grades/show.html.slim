@@ -1,0 +1,23 @@
+h3 Grade #{@grade}
+table.table
+  tr
+    th RANK
+    th Number
+    th Student
+    th Total Score
+    - @courses.each do |course|
+      th  = link_to course.name + " Score", course
+  - @rank = 0
+  - @students.each do |student|
+    - @rank = @rank + 1
+    tr
+        td = @rank
+        td = student.number
+        td = student.cn_name
+        td = student.total_score_by @course_id_period_dict
+        - @courses.each do |course|
+          td
+            - student.student_courses.each do |sc|
+              - if sc.course_id == course.id
+                = sc.try(:total_score)
+                - break
