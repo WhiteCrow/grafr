@@ -11,7 +11,7 @@ class Student < ApplicationRecord
   scope :grade, ->(grade){where(grade: grade).includes(:student_courses)}
 
   def gender_string
-    if gender == 0
+    if sgender == 0
       "女"
     elsif gender == 1
       "男"
